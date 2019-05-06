@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row" style="height: 100vh;">
+            <div class="col-lg-2 bg-info text-white">
+                <nav class="nav flex-column">
+                  <a class="nav-link active text-white" href="#">¡Hola {{ session['username'] }}!</a>
+                  <div class="row">
+                      <div class="col-lg-9">
+                          <a class="nav-link text-light" href="#">Canales</a>
+                      </div>
+                      <div class="col-lg-3">
+                          <a class="nav-link text-light" href="#">+</a>
+                      </div>
+                  </div>
+                  <a class="nav-link text-light" href="#">Link</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
