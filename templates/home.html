@@ -8,14 +8,65 @@
                   <a class="nav-link active text-white" href="#">¡Hola {{ session['username'] }}!</a>
                   <div class="row">
                       <div class="col-lg-9">
-                          <a class="nav-link text-light" href="#">Canales</a>
+                          <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#modalListaCanales">Canales</a>
                       </div>
                       <div class="col-lg-3">
-                          <a class="nav-link text-light" href="#">+</a>
+                          <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#modalCrearCanal">+</a>
                       </div>
                   </div>
-                  <a class="nav-link text-light" href="#">Link</a>
+                  <!-- <a class="nav-link text-light" href="#">Link</a> -->
                 </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalCrearCanal" tabindex="-1" role="dialog" aria-labelledby="modalCrearCanalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCrearCanalTitle">Crear canal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="lbl_channelname">Nombre del canal</label>
+                        <input type="text" class="form-control" name="channelname" value="" id="lbl_channelname" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="buttonCrearCanal">Crear canal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade bg-info" id="modalListaCanales" tabindex="-1" role="dialog" aria-labelledby="modalListaCanalesTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalListaCanalesTitle">Lista de canales</h5>
+                    <button type="button" class="btn btn-success ml-auto" data-dismiss="modal" data-toggle="modal" data-target="#modalCrearCanal">Crear canal</button>
+                    <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBodyListaCanales">
+
+                    {% for canal in canales %}
+                        <div class="card text-center mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><a class="card-link text-secondary" href="#" data-dismiss="modal">{{ canal }}</a></h5>
+                                <!-- <p class="card-text"></p> -->
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
             </div>
         </div>
     </div>
