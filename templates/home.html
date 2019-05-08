@@ -36,7 +36,7 @@
                         <input type="text" class="form-control" name="channelname" value="" id="lbl_channelname" required>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" id="modalFooterCrearCanal">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="buttonCrearCanal">Crear canal</button>
                 </div>
@@ -57,10 +57,10 @@
                 </div>
                 <div class="modal-body" id="modalBodyListaCanales">
 
-                    {% for canal in canales %}
+                    {% for canal in listaCanales %}
                         <div class="card text-center mb-3">
                             <div class="card-body">
-                                <h5 class="card-title"><a class="card-link text-secondary" href="#" data-dismiss="modal">{{ canal }}</a></h5>
+                                <h5 class="card-title"><a class="card-link text-info canal" href="#" data-dismiss="modal">{{ canal }}</a></h5>
                                 <!-- <p class="card-text"></p> -->
                             </div>
                         </div>
@@ -70,5 +70,18 @@
             </div>
         </div>
     </div>
+
+{% endblock %}
+
+{% block js %}
+
+    $('#modalCrearCanal').on('hidden.bs.modal', function (e) {
+        const divFooter = document.querySelector('#modalFooterCrearCanal');
+        const firstChild = divFooter.firstElementChild;
+        var atributo = firstChild.getAttribute('class');
+        if (atributo.includes('alert')){
+            divFooter.removeChild(firstChild);
+        }
+    })
 
 {% endblock %}
