@@ -1,6 +1,6 @@
-import os
+import os, datetime
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request, jsonify, json
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
@@ -9,7 +9,56 @@ socketio = SocketIO(app)
 
 canales = {
     "bienvenida" : [],
-    "general" : [],
+    "general" : [{"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
+    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}],
     "anuncios" : []
     }
 
@@ -41,3 +90,24 @@ def channel(data):
     channelname = data["channelname"]
     canales.update({ channelname : [] })
     emit("announce channel", {'channelname': channelname}, broadcast=True)
+
+@app.route("/mensajes/<channelname>", methods=['GET'])
+def mensaje(channelname):
+    show_data = json.dumps(canales.get(channelname))
+    return (show_data)
+
+@socketio.on("submit message")
+def enviar_mensaje(data):
+    channelname = data["channelname"]
+    mensaje = data["mensaje"]
+    usuario = session['username']
+    dateAhora = datetime.datetime.now()
+    hora = dateAhora.strftime("%d/%m/%Y %H:%M")
+    listaMensajes = canales.get(channelname)
+
+    if len(listaMensajes) > 100:
+        del listaMensajes[0]
+
+    listaMensajes.append({"mensaje": mensaje, "usuario": usuario, "hora": hora})
+
+    emit("announce message", {"mensaje": mensaje, "usuario": usuario, "hora": hora}, broadcast=True)

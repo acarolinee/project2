@@ -17,6 +17,31 @@
                   <!-- <a class="nav-link text-light" href="#">Link</a> -->
                 </nav>
             </div>
+            <div id="divChat" class="col-lg-10 h-100" style="overflow-y: scroll;">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+                    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a id="canal" class="nav-item nav-link font-weight-bold" href="#">Canal <span class="sr-only">(current)</span></a>
+                        </div>
+                    </div>
+                </nav>
+                <div id="chat">
+                </div>
+                <div class="pb-3 bg-light" style="position: sticky; bottom: 0; width: 100%;">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <input class="form-control" type="text" id="inputEnviarMensaje" placeholder="Envía un mensaje">
+                        </div>
+                        <div class="col-lg-1">
+                            <button type="button" name="button" class="btn btn-success" id="buttonEnviarMensaje">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -60,7 +85,7 @@
                     {% for canal in listaCanales %}
                         <div class="card text-center mb-3">
                             <div class="card-body">
-                                <h5 class="card-title"><a class="card-link text-info canal" href="#" data-dismiss="modal">{{ canal }}</a></h5>
+                                <h5 class="card-title"><a class="card-link text-info canal" data-dismiss="modal" href="#">{{ canal }}</a></h5>
                                 <!-- <p class="card-text"></p> -->
                             </div>
                         </div>
