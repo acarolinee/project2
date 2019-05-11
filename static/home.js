@@ -1,3 +1,66 @@
+if (localStorage.getItem('channelname')){
+    const divRowMenu = document.querySelector("#rowMenu");
+    const div = document.createElement('div');
+    div.setAttribute("class", "col-lg-12 bg-dark");
+    const a = document.createElement('a');
+    a.setAttribute("class", "nav-link text-light");
+    a.setAttribute("href", "#");
+    a.setAttribute("id", "lastChannel")
+    a.innerHTML = localStorage.getItem('channelname');
+    a.onclick = () => {
+        const request = new XMLHttpRequest();
+        const channelname = a.innerHTML;
+
+        localStorage.setItem('channelname', channelname);
+
+        request.open('GET', `/mensajes/${channelname}`);
+
+        request.onload = () => {
+            const data = JSON.parse(request.responseText);
+            document.querySelector('#canal').innerHTML = channelname;
+
+            const chat = document.querySelector('#chat');
+
+            while(chat.firstChild){
+                chat.removeChild(chat.firstChild);
+            };
+
+            data.forEach(dato => {
+                const hr = document.createElement('hr');
+                const firstDiv = document.createElement('div');
+                firstDiv.setAttribute("class", "row");
+                const secondDiv = document.createElement('div');
+                secondDiv.setAttribute("class", "col");
+                const usuario = document.createElement('strong');
+                usuario.innerHTML = dato["usuario"];
+                const usuarioHora = document.createElement('p');
+                usuarioHora.appendChild(usuario);
+                usuarioHora.innerHTML += ' ' + dato["hora"];
+                const mensaje = document.createElement('p');
+                mensaje.innerHTML = dato["mensaje"];
+
+                secondDiv.appendChild(hr);
+                secondDiv.appendChild(usuarioHora);
+                secondDiv.appendChild(mensaje);
+                firstDiv.appendChild(secondDiv);
+
+                // chat.append(hr);
+                chat.append(firstDiv);
+            });
+
+        };
+
+        // const data = new FormData();
+        // data.append('channelname', channelname);
+
+        request.send();
+    };
+
+    div.appendChild(a);
+    divRowMenu.appendChild(div);
+
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
@@ -35,11 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         };
 
-        document.querySelector('#buttonEnviarMensaje').onclick = () => {
+        document.querySelector('#formEnviarMensaje').onsubmit = () => {
             const mensaje = document.querySelector('#inputEnviarMensaje').value;
-            const channelname = document.querySelector('#canal').innerHTML;
-            socket.emit('submit message', {'mensaje': mensaje, 'channelname': channelname});
-            document.querySelector('#inputEnviarMensaje').value = ""
+            if (mensaje){
+                const channelname = document.querySelector('#canal').innerHTML;
+                socket.emit('submit message', {'mensaje': mensaje, 'channelname': channelname});
+                document.querySelector('#inputEnviarMensaje').value = "";
+            }            
+            return false;
         };
 
     });
@@ -77,6 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
         link.onclick = () => {
             const request = new XMLHttpRequest();
             const channelname = link.innerHTML;
+
+            localStorage.setItem('channelname', channelname);
 
             request.open('GET', `/mensajes/${channelname}`);
 
@@ -120,6 +188,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
             request.send();
 
+            if(document.querySelector("#lastChannel")){
+                document.querySelector("#lastChannel").innerHTML = channelname;
+            }
+            else{
+                const divRowMenu = document.querySelector("#rowMenu");
+                const div = document.createElement('div');
+                div.setAttribute("class", "col-lg-12 bg-dark");
+                const a = document.createElement('a');
+                a.setAttribute("class", "nav-link text-light");
+                a.setAttribute("href", "#");
+                a.setAttribute("id", "lastChannel")
+                a.innerHTML = localStorage.getItem('channelname');
+                a.onclick = () => {
+                    const request = new XMLHttpRequest();
+                    const channelname = a.innerHTML;
+
+                    localStorage.setItem('channelname', channelname);
+
+                    request.open('GET', `/mensajes/${channelname}`);
+
+                    request.onload = () => {
+                        const data = JSON.parse(request.responseText);
+                        document.querySelector('#canal').innerHTML = channelname;
+
+                        const chat = document.querySelector('#chat');
+
+                        while(chat.firstChild){
+                            chat.removeChild(chat.firstChild);
+                        };
+
+                        data.forEach(dato => {
+                            const hr = document.createElement('hr');
+                            const firstDiv = document.createElement('div');
+                            firstDiv.setAttribute("class", "row");
+                            const secondDiv = document.createElement('div');
+                            secondDiv.setAttribute("class", "col");
+                            const usuario = document.createElement('strong');
+                            usuario.innerHTML = dato["usuario"];
+                            const usuarioHora = document.createElement('p');
+                            usuarioHora.appendChild(usuario);
+                            usuarioHora.innerHTML += ' ' + dato["hora"];
+                            const mensaje = document.createElement('p');
+                            mensaje.innerHTML = dato["mensaje"];
+
+                            secondDiv.appendChild(hr);
+                            secondDiv.appendChild(usuarioHora);
+                            secondDiv.appendChild(mensaje);
+                            firstDiv.appendChild(secondDiv);
+
+                            // chat.append(hr);
+                            chat.append(firstDiv);
+                        });
+
+                    };
+
+                    // const data = new FormData();
+                    // data.append('channelname', channelname);
+
+                    request.send();
+                };
+
+                div.appendChild(a);
+                divRowMenu.appendChild(div);
+            }
+
         };
     });
 
@@ -127,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const chat = document.querySelector('#chat');
         let cantidad_mensajes = chat.children.length;
-        if (cantidad_mensajes > 100){
+        if (cantidad_mensajes >= 100){
             chat.removeChild(chat.firstChild);
         }
 
@@ -156,5 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
         divChat.scrollTop = divChat.scrollHeight;
 
     });
+
+    if(document.querySelector("#lastChannel")){
+        document.querySelector("#lastChannel").click();
+    }
 
 });

@@ -7,58 +7,10 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = 'b"\xdd\xa2x\xa1I/\xces\x05Kr\x9e\xad~t\xf8"' # os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
+
 canales = {
     "bienvenida" : [],
-    "general" : [{"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "zxc", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}, {"mensaje": "chao", "usuario": "juan", "hora": "08/05/2019 14:04"},
-    {"mensaje": "holi", "usuario": "juan", "hora": "08/05/2019 14:01"}],
+    "general" : [], #FORMAT {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}
     "anuncios" : []
     }
 
@@ -67,7 +19,7 @@ listaCanales = list(canales.keys())
 @app.route("/")
 def index():
 
-    session.pop('username', None) # borrar linea despues
+    # session.pop('username', None) # borrar esta linea despues
 
     if 'username' in session:
         return render_template("home.html", listaCanales=listaCanales)
@@ -105,7 +57,7 @@ def enviar_mensaje(data):
     hora = dateAhora.strftime("%d/%m/%Y %H:%M")
     listaMensajes = canales.get(channelname)
 
-    if len(listaMensajes) > 100:
+    if len(listaMensajes) >= 100:
         del listaMensajes[0]
 
     listaMensajes.append({"mensaje": mensaje, "usuario": usuario, "hora": hora})

@@ -6,7 +6,7 @@
             <div class="col-lg-2 bg-info text-white">
                 <nav class="nav flex-column">
                   <a class="nav-link active text-white" href="#">¡Hola {{ session['username'] }}!</a>
-                  <div class="row">
+                  <div class="row" id="rowMenu">
                       <div class="col-lg-9">
                           <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#modalListaCanales">Canales</a>
                       </div>
@@ -32,14 +32,16 @@
                 <div id="chat">
                 </div>
                 <div class="pb-3 bg-light" style="position: sticky; bottom: 0; width: 100%;">
-                    <div class="row">
-                        <div class="col-lg-11">
-                            <input class="form-control" type="text" id="inputEnviarMensaje" placeholder="Envía un mensaje">
+                    <form id="formEnviarMensaje">
+                        <div class="row">
+                            <div class="col-lg-11">
+                                <input class="form-control" type="text" id="inputEnviarMensaje" placeholder="Envía un mensaje">
+                            </div>
+                            <div class="col-lg-1">
+                                <button type="submit" class="btn btn-success">Enviar</button>
+                            </div>
                         </div>
-                        <div class="col-lg-1">
-                            <button type="button" name="button" class="btn btn-success" id="buttonEnviarMensaje">Enviar</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
