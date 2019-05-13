@@ -102,13 +102,17 @@
 
 {% block js %}
 
-    $('#modalCrearCanal').on('hidden.bs.modal', function (e) {
-        const divFooter = document.querySelector('#modalFooterCrearCanal');
-        const firstChild = divFooter.firstElementChild;
-        var atributo = firstChild.getAttribute('class');
-        if (atributo.includes('alert')){
-            divFooter.removeChild(firstChild);
-        }
-    })
+    <script src="/static/home.js"></script>
+
+    <script>
+        $('#modalCrearCanal').on('hidden.bs.modal', function (e) {
+            const divFooter = document.querySelector('#modalFooterCrearCanal');
+            const firstChild = divFooter.firstElementChild;
+            var atributo = firstChild.getAttribute('class');
+            if (atributo && atributo.includes('alert')){
+                divFooter.removeChild(firstChild);
+            }
+        })
+    </script>
 
 {% endblock %}

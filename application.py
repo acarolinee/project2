@@ -41,6 +41,7 @@ def login():
 def channel(data):
     channelname = data["channelname"]
     canales.update({ channelname : [] })
+    listaCanales.append(channelname)
     emit("announce channel", {'channelname': channelname}, broadcast=True)
 
 @app.route("/mensajes/<channelname>", methods=['GET'])
