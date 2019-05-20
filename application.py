@@ -10,7 +10,7 @@ socketio = SocketIO(app)
 
 canales = {
     "bienvenida" : [],
-    "general" : [], #FORMAT {"mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}
+    "general" : [], #FORMAT {"id": "1", "mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}
     "anuncios" : []
     }
 
@@ -19,7 +19,7 @@ listaCanales = list(canales.keys())
 @app.route("/")
 def index():
 
-    # session.pop('username', None) # borrar esta linea despues
+    session.pop('username', None) # borrar esta linea despues
 
     if 'username' in session:
         return render_template("home.html", listaCanales=listaCanales)
@@ -61,6 +61,27 @@ def enviar_mensaje(data):
     if len(listaMensajes) >= 100:
         del listaMensajes[0]
 
-    listaMensajes.append({"mensaje": mensaje, "usuario": usuario, "hora": hora})
+    # try:
+    #     id = next(i for i, e in enumerate((listaMensajes), 1) if i != int(e["id"]))
+    # except StopIteration:
+    #     id = len(listaMensajes)+1
 
-    emit("announce message", {"mensaje": mensaje, "usuario": usuario, "hora": hora}, broadcast=True)
+    try:
+        id = int(listaMensajes[-1]["id"])+1
+    except IndexError:
+        id = 1
+    listaMensajes.insert(id-1, {"id": str(id), "mensaje": mensaje, "usuario": usuario, "hora": hora})
+    # listaMensajes.append({"id": id, "mensaje": mensaje, "usuario": usuario, "hora": hora})
+
+    emit("announce message", {"id": str(id), "mensaje": mensaje, "usuario": usuario, "hora": hora}, broadcast=True)
+
+@socketio.on("delete message")
+def eliminar_mensaje(data):
+    channelname = data["channelname"]
+    id = data["id"]
+    listaMensajes = canales.get(channelname)
+
+    del_position = listaMensajes.index(next(i for i in ((listaMensajes)) if i["id"] == id ))
+    del listaMensajes[del_position]
+
+    emit("remove message", {'id': id}, broadcast=True)

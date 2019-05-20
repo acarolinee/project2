@@ -4,9 +4,11 @@ if (localStorage.getItem('channelname')){
     MenuAgregarLastChannel();
 }
 
+var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    // var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     socket.on('connect', () => {
 
@@ -148,6 +150,22 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector("#lastChannel").click();
     }
 
+    socket.on("remove message", dato => {
+
+        const chat = document.querySelector('#chat');
+        if (chat.hasChildNodes()) {
+            var children = chat.childNodes;
+
+            for (var i = 0; i < children.length; i++) {
+                if (children[i].dataset.id == dato["id"]){
+                    chat.removeChild(children[i]);
+                    break;
+                }
+            }
+        }
+
+    });
+
 });
 
 function MenuAgregarLastChannel() {
@@ -201,8 +219,13 @@ function AgregarMensaje(dato) {
     const hr = document.createElement('hr');
     const firstDiv = document.createElement('div');
     firstDiv.setAttribute("class", "row");
+    firstDiv.setAttribute("data-id", dato["id"]);
     const secondDiv = document.createElement('div');
     secondDiv.setAttribute("class", "col");
+    const thirdDiv = document.createElement('div');
+    thirdDiv.setAttribute("class", "col");
+    const fourthDiv = document.createElement('div');
+    fourthDiv.setAttribute("class", "col");
     const usuario = document.createElement('strong');
     usuario.innerHTML = dato["usuario"];
     const usuarioHora = document.createElement('p');
@@ -211,9 +234,30 @@ function AgregarMensaje(dato) {
     const mensaje = document.createElement('p');
     mensaje.innerHTML = dato["mensaje"];
 
+    const button = document.createElement('button');
+    button.setAttribute("class", "close ml-0");
+    button.setAttribute("type", "button");
+    const span = document.createElement('span');
+    span.setAttribute("aria-hidden", "true");
+    span.innerHTML = "&times;";
+
+    button.appendChild(span);
+
+    button.onclick = () => {
+        const channelname = document.querySelector('#canal').innerHTML;
+        socket.emit('delete message', {'channelname': channelname, 'id': dato["id"]});
+    };
+
+    thirdDiv.appendChild(usuarioHora);
+    if (document.querySelector("#linkUser").dataset.user == usuario.innerHTML){
+        thirdDiv.appendChild(button);
+    }
+
+    fourthDiv.appendChild(mensaje);
+
     secondDiv.appendChild(hr);
-    secondDiv.appendChild(usuarioHora);
-    secondDiv.appendChild(mensaje);
+    secondDiv.appendChild(thirdDiv);
+    secondDiv.appendChild(fourthDiv);
     firstDiv.appendChild(secondDiv);
 
     // chat.append(hr);

@@ -5,7 +5,7 @@
         <div class="row" style="height: 100vh;">
             <div class="col-lg-2 bg-info text-white">
                 <nav class="nav flex-column">
-                  <a class="nav-link active text-white" href="#">¡Hola {{ session['username'] }}!</a>
+                  <a id="linkUser" class="nav-link active text-white" href="#" data-user="{{ session['username'] }}">¡Hola {{ session['username'] }}!</a>
                   <div class="row" id="rowMenu">
                       <div class="col-lg-9">
                           <a class="nav-link text-light" href="#" data-toggle="modal" data-target="#modalListaCanales">Canales</a>
