@@ -133,16 +133,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.on("announce message", dato => {
 
-        const chat = document.querySelector('#chat');
-        let cantidad_mensajes = chat.children.length;
-        if (cantidad_mensajes >= 100){
-            chat.removeChild(chat.firstChild);
+        const canal = document.querySelector('#canal').innerHTML;
+
+        if (canal == dato["channelname"]){
+            const chat = document.querySelector('#chat');
+            let cantidad_mensajes = chat.children.length;
+            if (cantidad_mensajes >= 100){
+                chat.removeChild(chat.firstChild);
+            }
+
+            AgregarMensaje(dato);
+
+            const divChat = document.querySelector('#divChat');
+            divChat.scrollTop = divChat.scrollHeight;
         }
-
-        AgregarMensaje(dato);
-
-        const divChat = document.querySelector('#divChat');
-        divChat.scrollTop = divChat.scrollHeight;
 
     });
 
@@ -152,14 +156,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.on("remove message", dato => {
 
-        const chat = document.querySelector('#chat');
-        if (chat.hasChildNodes()) {
-            var children = chat.childNodes;
+        const canal = document.querySelector('#canal').innerHTML;
+        if (canal == dato["channelname"]){
+            const chat = document.querySelector('#chat');
+            if (chat.hasChildNodes()) {
+                var children = chat.childNodes;
 
-            for (var i = 0; i < children.length; i++) {
-                if (children[i].dataset.id == dato["id"]){
-                    chat.removeChild(children[i]);
-                    break;
+                for (var i = 0; i < children.length; i++) {
+                    if (children[i].dataset.id == dato["id"]){
+                        chat.removeChild(children[i]);
+                        break;
+                    }
                 }
             }
         }
@@ -228,7 +235,10 @@ function AgregarMensaje(dato) {
     fourthDiv.setAttribute("class", "col");
     const usuario = document.createElement('strong');
     usuario.innerHTML = dato["usuario"];
+    const row = document.createElement('div');
+    row.setAttribute("class", "row");
     const usuarioHora = document.createElement('p');
+    usuarioHora.setAttribute("style", "float:left");
     usuarioHora.appendChild(usuario);
     usuarioHora.innerHTML += ' ' + dato["hora"];
     const mensaje = document.createElement('p');
@@ -253,10 +263,12 @@ function AgregarMensaje(dato) {
         thirdDiv.appendChild(button);
     }
 
+    row.appendChild(thirdDiv);
+
     fourthDiv.appendChild(mensaje);
 
     secondDiv.appendChild(hr);
-    secondDiv.appendChild(thirdDiv);
+    secondDiv.appendChild(row);
     secondDiv.appendChild(fourthDiv);
     firstDiv.appendChild(secondDiv);
 
