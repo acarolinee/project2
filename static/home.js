@@ -1,7 +1,7 @@
 // localStorage.clear();
 
 if (localStorage.getItem('channelname')){
-    MenuAgregarLastChannel();
+    menuAgregarLastChannel();
 }
 
 var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.on('connect', () => {
 
         document.querySelector('#buttonCrearCanal').onclick = () => {
-            const channelname = document.querySelector('#lbl_channelname').value;
+            const channelname = document.querySelector('#lbl-channelname').value;
 
             const element = Array.from(document.querySelectorAll('.canal')).find(link => link.innerHTML === channelname);
 
@@ -29,8 +29,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (typeof element === 'undefined'){
                 socket.emit('submit channel', {'channelname': channelname});
-                document.querySelector('#lbl_channelname').value = "";
+                document.querySelector('#lbl-channelname').value = "";
                 $('#modalCrearCanal').modal('hide');
+
+                localStorage.setItem('channelname', channelname);
+                chatCargarMensajes(channelname);
+                if(document.querySelector("#lastChannel")){
+                    document.querySelector("#lastChannel").innerHTML = link.innerHTML;
+                }
+                else{
+                    menuAgregarLastChannel();
+                }
+
                 // divAlerta.setAttribute("class", "alert alert-info mb-0");
                 // divAlerta.innerHTML = "¡Sala creada!";
             }
@@ -69,63 +79,40 @@ document.addEventListener('DOMContentLoaded', () => {
         link.setAttribute("data-dismiss", "modal");
         link.innerHTML = data.channelname;
         link.onclick = () => {
-            const request = new XMLHttpRequest();
+
             const channelname = link.innerHTML;
-            request.open('GET', `/mensajes/${channelname}`);
-            request.onload = () => {
-                const data = JSON.parse(request.responseText);
-                document.querySelector('#canal').innerHTML = channelname;
+            localStorage.setItem('channelname', channelname);
+            chatCargarMensajes(channelname);
+            if(document.querySelector("#lastChannel")){
+                document.querySelector("#lastChannel").innerHTML = channelname;
+            }
+            else{
+                menuAgregarLastChannel();
+            }
 
-                localStorage.setItem('channelname', channelname);
-
-                if(document.querySelector("#lastChannel")){
-                    document.querySelector("#lastChannel").innerHTML = link.innerHTML;
-                }
-                else{
-                    MenuAgregarLastChannel();
-                }
-
-                const chat = document.querySelector('#chat');
-
-                while(chat.firstChild){
-                    chat.removeChild(chat.firstChild);
-                };
-            };
-            request.send();
         };
         h5.appendChild(link);
         secondDiv.appendChild(h5);
         firstDiv.appendChild(secondDiv);
         document.querySelector('#modalBodyListaCanales').append(firstDiv);
-        link.click();
 
-        if(document.querySelector("#lastChannel")){
-            document.querySelector("#lastChannel").innerHTML = link.innerHTML;
-        }
-        else{
-            MenuAgregarLastChannel();
-        }
-
-        const chat = document.querySelector('#chat');
-
-        while(chat.firstChild){
-            chat.removeChild(chat.firstChild);
-        };
+        // link.click();
 
     });
 
     document.querySelectorAll('.canal').forEach(link => {
         link.onclick = () => {
 
-            localStorage.setItem('channelname', link.innerHTML);
+            const channelname = link.innerHTML
+            localStorage.setItem('channelname', channelname);
 
-            ChatCargarMensajes(link);
+            chatCargarMensajes(channelname);
 
             if(document.querySelector("#lastChannel")){
-                document.querySelector("#lastChannel").innerHTML = link.innerHTML;
+                document.querySelector("#lastChannel").innerHTML = channelname;
             }
             else{
-                MenuAgregarLastChannel();
+                menuAgregarLastChannel();
             }
 
         };
@@ -137,8 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (canal == dato["channelname"]){
             const chat = document.querySelector('#chat');
-            let cantidad_mensajes = chat.children.length;
-            if (cantidad_mensajes >= 100){
+            let cantidadMensajes = chat.children.length;
+            if (cantidadMensajes >= 100){
                 chat.removeChild(chat.firstChild);
             }
 
@@ -175,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-function MenuAgregarLastChannel() {
+function menuAgregarLastChannel() {
     const divRowMenu = document.querySelector("#rowMenu");
     const div = document.createElement('div');
     div.setAttribute("class", "col-lg-12 bg-dark");
@@ -185,16 +172,16 @@ function MenuAgregarLastChannel() {
     link.setAttribute("id", "lastChannel")
     link.innerHTML = localStorage.getItem('channelname');
     link.onclick = () => {
-        ChatCargarMensajes(link);
+        chatCargarMensajes(link.innerHTML);
     };
 
     div.appendChild(link);
     divRowMenu.appendChild(div);
 }
 
-function ChatCargarMensajes(link) {
+function chatCargarMensajes(newChannelname) {
     const request = new XMLHttpRequest();
-    const channelname = link.innerHTML;
+    const channelname = newChannelname;
 
     // localStorage.setItem('channelname', channelname);
 
