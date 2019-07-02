@@ -188,18 +188,19 @@ function chatCargarMensajes(newChannelname) {
     request.open('GET', `/mensajes/${channelname}`);
 
     request.onload = () => {
-        const data = JSON.parse(request.responseText);
+
         document.querySelector('#canal').innerHTML = channelname;
-
         const chat = document.querySelector('#chat');
-
         while(chat.firstChild){
             chat.removeChild(chat.firstChild);
         };
 
-        data.forEach(dato => {
-            AgregarMensaje(dato);
-        });
+        const data = JSON.parse(request.responseText);
+        if (data){
+            data.forEach(dato => {
+                AgregarMensaje(dato);
+            });
+        }
 
     };
 
