@@ -20,6 +20,11 @@ listaCanales = list(canales.keys())
 def index():
 
     # session.pop('username', None) # borrar esta linea despues
+    canales = {
+        "bienvenida" : [],
+        "general" : [], #FORMAT {"id": "1", "mensaje": "asd", "usuario": "juan", "hora": "08/05/2019 14:01"}
+        "anuncios" : []
+    }
 
     if 'username' in session:
         return render_template("home.html", listaCanales=listaCanales)
