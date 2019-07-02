@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('channelname', channelname);
                 chatCargarMensajes(channelname);
                 if(document.querySelector("#lastChannel")){
-                    document.querySelector("#lastChannel").innerHTML = link.innerHTML;
+                    document.querySelector("#lastChannel").innerHTML = channelname;
                 }
                 else{
                     menuAgregarLastChannel();
